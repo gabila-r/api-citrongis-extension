@@ -1,0 +1,1 @@
+define({  "name": "api-citrongis-extension",  "version": "0.1",  "description": "API Doc for API CitronGIS extensions",  "title": "API CitronGIS extensions",  "url": "",  "sampleUrl": false,  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2015-11-15T14:26:08.663Z",    "url": "http://apidocjs.com",    "version": "0.13.1"  }});
