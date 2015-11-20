@@ -4,7 +4,9 @@ var User = mongoose.model('User');
 exports.checkParams = function(request, response, next) {
     var player = request.body;
 
-    if (!player.name || !player.score) {
+    console.log(player);
+
+    if (!player.user_name || !player.user_score) {
         response.status(400).json({"error": "Missing name or score parameter"});
     }
     else if (typeof player.score != 'number') {
@@ -29,6 +31,7 @@ var sendFindResult = function(limit, results, response) {
 
 //GET /ranking
 exports.ranking = function (request, response) {
+    console.log("/GET ranking");
 
     User.find({})
     .sort('-user_score')
@@ -43,12 +46,15 @@ exports.ranking = function (request, response) {
 
 //POST /player
 exports.player = function (request, response) {
+    console.log("/POST player");
+
+
     var player = request.body;
 
     new User({
         user_id: new mongoose.Types.ObjectId,
-        user_name: player.name,
-        user_score: player.score
+        user_name: player.user_name,
+        user_score: player.user_score
     }).save(function (err) {
         if (err) {
             response.status(500).send("Error save new player :" + err);
