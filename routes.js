@@ -9,9 +9,6 @@ exports.checkParams = function(request, response, next) {
     if (!player.user_name || !player.user_score) {
         response.status(400).json({"error": "Missing name or score parameter"});
     }
-    else if (typeof player.score != 'number') {
-        response.status(400).json({"error": "Score must be a number"});
-    }
     else {
         next();
     }
@@ -48,8 +45,11 @@ exports.ranking = function (request, response) {
 exports.player = function (request, response) {
     console.log("/POST player");
 
-
     var player = request.body;
+
+    if (typeof player.user_score != 'number') {
+        player.user_score = parseInt(player.user_score);
+    }
 
     new User({
         user_id: new mongoose.Types.ObjectId,
