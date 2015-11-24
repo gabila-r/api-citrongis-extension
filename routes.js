@@ -30,6 +30,7 @@ var sendFindResult = function(limit, results, response) {
 exports.ranking = function (request, response) {
     console.log("/GET ranking");
 
+	response.header('Access-Control-Allow-Origin', '*');
     User.find({})
     .sort('-user_score')
     .exec(function (err, result) {
@@ -45,11 +46,14 @@ exports.ranking = function (request, response) {
 exports.player = function (request, response) {
     console.log("/POST player");
 
+	response.header('Access-Control-Allow-Origin', '*');
     var player = request.body;
 
     if (typeof player.user_score != 'number') {
         player.user_score = parseInt(player.user_score);
     }
+	console.log(player.user_name);
+	console.log(player.user_score);
 
     new User({
         user_id: new mongoose.Types.ObjectId,
