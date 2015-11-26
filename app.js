@@ -4,8 +4,9 @@ var app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser());
 
-require('./db.js');
+
 var route = require('./routes.js');
+
 
 /**
  * @api {get} /ranking Request Ranking information

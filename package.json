@@ -9,11 +9,11 @@
     "dependencies": {
         "express": "~4.9.0",
         "body-parser": "~1.8.1",
-        "mongoose": "latest",
         "apidoc": "latest",
         "nodeunit ": "latest",
         "http": "latest",
-        "querystring": "latest"
+        "querystring": "latest",
+        "tingodb": "latest"
     },
     "scripts" : {
         "test": "./node_modules/nodeunit/bin/nodeunit ./tests/api.js"

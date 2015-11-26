@@ -1,5 +1,8 @@
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
+var engine = require('tingodb')();
+assert = require('assert');
+
+var db = new engine.Db(__dirname + '/db_extensions', {});
+var collection = db.collection('users');
 
 exports.checkParams = function(request, response, next) {
     var player = request.body;
@@ -29,17 +32,11 @@ var sendFindResult = function(limit, results, response) {
 //GET /ranking
 exports.ranking = function (request, response) {
     console.log("/GET ranking");
+    response.header('Access-Control-Allow-Origin', '*');
 
-	response.header('Access-Control-Allow-Origin', '*');
-    User.find({})
-    .sort('-user_score')
-    .exec(function (err, result) {
-        if (err) {
-            response.status(500).send(err);
-        }
-        sendFindResult(request.query.limit, result, response);
+    collection.find({}).sort({user_score: -1}).toArray(function (err, res) {
+        sendFindResult(request.query.limit, res, response);
     });
-
 };
 
 //POST /player
@@ -55,11 +52,8 @@ exports.player = function (request, response) {
 	console.log(player.user_name);
 	console.log(player.user_score);
 
-    new User({
-        user_id: new mongoose.Types.ObjectId,
-        user_name: player.user_name,
-        user_score: player.user_score
-    }).save(function (err) {
+
+    collection.insert({"user_name": player.user_name, "user_score": player.user_score}, function(err) {
         if (err) {
             response.status(500).send("Error save new player :" + err);
         }
