@@ -14,7 +14,8 @@ exports.testAddPlayer = function(test) {
 
     var data = querystring.stringify({
             user_name: 'TestRomain',
-            user_score : 123456789
+            user_score : 123456789,
+            game: "test"
         });
 
     var options = {
@@ -48,7 +49,7 @@ exports.testAddPlayer = function(test) {
 };
 
 exports.testGetRanking = function(test) {
-    http.get('http://127.0.0.1:3000/ranking', function(response) {
+    http.get('http://127.0.0.1:3000/ranking?game=test', function(response) {
         // Continuously update stream with data
         var body = '';
         response.on('data', function(d) {
@@ -73,7 +74,7 @@ exports.testGetRanking = function(test) {
 };
 
 exports.testGetRankingLimit1 = function(test) {
-    http.get('http://127.0.0.1:3000/ranking?limit=1', function(response) {
+    http.get('http://127.0.0.1:3000/ranking?limit=1&game=test', function(response) {
         var body = '';
         response.on('data', function(d) {
             body += d;
